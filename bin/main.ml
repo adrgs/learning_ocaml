@@ -299,3 +299,14 @@ let replicate list times =
 let () = print_endline @@ dump (replicate [ "a"; "b"; "c" ] 3)
 
 (* prob 16 *)
+let () = print_endline "=== prob 16 ==="
+
+let drop list nth = 
+  let rec drop' list n =
+    match list with
+    | [] -> []
+    | x :: tail -> if n = 1 then drop' tail nth else x :: drop' tail (n - 1)
+  in 
+  drop' list nth
+
+let () = print_endline @@ dump (drop [ "a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j" ] 3)
