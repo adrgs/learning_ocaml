@@ -237,6 +237,7 @@ let () =
 ;;
 
 (* prob 13 *)
+let () = print_endline "=== prob 13 ==="
 
 let encode list =
   let rec encode' acc chr nr list =
@@ -264,3 +265,19 @@ let () =
   @@ dump
        (encode [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
 ;;
+
+(* prob 14 *)
+let () = print_endline "=== prob 14 ==="
+
+let duplicate list =
+  let rec duplicate' acc list =
+    match list with
+    | [] -> acc
+    | x :: tail -> duplicate' (acc @ [ x; x ]) tail
+  in
+  duplicate' [] list
+;;
+
+let () = print_endline @@ dump (duplicate [ "a"; "b"; "c"; "c"; "d" ])
+
+(* prob 15 *)
