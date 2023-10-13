@@ -1,3 +1,5 @@
+open Batteries
+
 (* prob 1 *)
 let () = print_endline "=== prob 1 ==="
 
@@ -8,14 +10,8 @@ let rec last list =
   | _ :: tail -> last tail
 ;;
 
-let f a =
-  match a with
-  | None -> print_endline "None"
-  | Some x -> print_endline x
-;;
-
-let () = f (last [ "a"; "b"; "c"; "d" ])
-let () = f (last [])
+let () = print_endline @@ dump (last [ "a"; "b"; "c"; "d" ])
+let () = print_endline @@ dump (last [])
 
 (* prob 2 *)
 let () = print_endline "=== prob 2 ==="
@@ -28,17 +24,8 @@ let rec last_two list =
   | _ :: tail -> last_two tail
 ;;
 
-let f list =
-  match last_two list with
-  | Some (_x, _y) ->
-    let () = print_endline _x in
-    let () = print_endline _y in
-    ()
-  | None -> print_endline "None"
-;;
-
-let () = f [ "a"; "b"; "c"; "d" ]
-let () = f [ "a" ]
+let () = print_endline @@ dump (last_two [ "a"; "b"; "c"; "d" ])
+let () = print_endline @@ dump (last_two [ "a" ])
 
 (* prob 3 *)
 let () = print_endline "=== prob 3 ==="
@@ -52,14 +39,8 @@ let at idx list =
   at' idx list
 ;;
 
-let f idx list =
-  match at idx list with
-  | Some x -> print_endline x
-  | None -> print_endline "None"
-;;
-
-let () = f 3 [ "a"; "b"; "c"; "d"; "e" ]
-let () = f 3 [ "a" ]
+let () = print_endline @@ dump (at 3 [ "a"; "b"; "c"; "d"; "e" ])
+let () = print_endline @@ dump (at 3 [ "a" ])
 
 (* prob 4 *)
 let () = print_endline "=== prob 4 ==="
@@ -73,9 +54,8 @@ let length list =
   length' 0 list
 ;;
 
-let f list = print_endline (string_of_int (length list))
-let () = f [ "a"; "b"; "c" ]
-let () = f []
+let () = print_endline @@ dump (length [ "a"; "b"; "c" ])
+let () = print_endline @@ dump (length [])
 
 (* prob 5 *)
 let () = print_endline "=== prob 5 ==="
@@ -89,18 +69,7 @@ let rev list =
   rev' [] list
 ;;
 
-let f list =
-  let rec f' list =
-    match list with
-    | [] -> ()
-    | x :: tail ->
-      let () = print_endline x in
-      f' tail
-  in
-  f' list
-;;
-
-let () = f (rev [ "a"; "b"; "c" ])
+let () = print_endline @@ dump (rev [ "a"; "b"; "c" ])
 
 (* prob 6 *)
 let () = print_endline "=== prob 6 ==="
@@ -116,9 +85,8 @@ let is_palindrome list =
   is_palindrome' list (rev list)
 ;;
 
-let f list = print_endline (string_of_bool (is_palindrome list))
-let () = f [ "x"; "a"; "m"; "a"; "x" ]
-let () = f [ "a"; "b" ]
+let () = print_endline @@ dump (is_palindrome [ "x"; "a"; "m"; "a"; "x" ])
+let () = print_endline @@ dump (is_palindrome [ "a"; "b" ])
 
 (* prob 7 *)
 let () = print_endline "=== prob 7 ==="
@@ -139,18 +107,10 @@ let flatten list =
   flatten' [] list
 ;;
 
-let f list =
-  let rec f' list =
-    match list with
-    | [] -> ()
-    | x :: tail ->
-      let () = print_endline x in
-      f' tail
-  in
-  f' list
+let () =
+  print_endline
+  @@ dump (flatten [ One "a"; Many [ One "b"; Many [ One "c"; One "d" ]; One "e" ] ])
 ;;
-
-let () = f (flatten [ One "a"; Many [ One "b"; Many [ One "c"; One "d" ]; One "e" ] ])
 
 (* prob 8 *)
 let () = print_endline "=== prob 8 ==="
@@ -166,19 +126,10 @@ let compress list =
   compress' [] list
 ;;
 
-let f list =
-  let rec f' list =
-    match list with
-    | [] -> ()
-    | x :: tail ->
-      let () = print_endline x in
-      f' tail
-  in
-  f' list
-;;
-
 let () =
-  f (compress [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
+  print_endline
+  @@ dump
+       (compress [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
 ;;
 
 (* prob 9 *)
@@ -196,19 +147,11 @@ let pack list =
   pack' [] [] list
 ;;
 
-let f list =
-  let rec f' list =
-    match list with
-    | [] -> ()
-    | x :: tail ->
-      let () = print_endline (String.concat "" x) in
-      f' tail
-  in
-  f' list
-;;
-
 let () =
-  f (pack [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "d"; "e"; "e"; "e"; "e" ])
+  print_endline
+  @@ dump
+       (pack
+          [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "d"; "e"; "e"; "e"; "e" ])
 ;;
 
 (* prob 10 *)
@@ -228,19 +171,10 @@ let encode list =
   encode' [] "" 0 list
 ;;
 
-let f list =
-  let rec f' list =
-    match list with
-    | [] -> ()
-    | (nr, chr) :: tail ->
-      let () = print_endline (string_of_int nr ^ chr) in
-      f' tail
-  in
-  f' list
-;;
-
 let () =
-  f (encode [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
+  print_endline
+  @@ dump
+       (encode [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
 ;;
 
 (* prob 11 *)
@@ -253,24 +187,26 @@ type 'a rle =
 let encode list =
   let rec encode' acc chr nr list =
     match list with
-    | [] -> 
-      if nr = 0 then acc 
-      else if nr = 1 then acc @ [ One chr ]
+    | [] ->
+      if nr = 0
+      then acc
+      else if nr = 1
+      then acc @ [ One chr ]
       else acc @ [ Many (nr, chr) ]
     | x :: tail ->
       if nr = 0
       then encode' acc x 1 tail
       else if x = chr
       then encode' acc chr (nr + 1) tail
-      else 
-        if nr = 1 then encode' (acc @ [ One chr ]) x 1 tail
-        else encode' (acc @ [ Many (nr, chr) ]) x 1 tail
+      else if nr = 1
+      then encode' (acc @ [ One chr ]) x 1 tail
+      else encode' (acc @ [ Many (nr, chr) ]) x 1 tail
   in
   encode' [] "" 0 list
 ;;
 
-let f list = print_endline (String.concat "" (List.map (fun x -> match x with One x -> x | Many (nr, chr) -> string_of_int nr ^ chr) list))
-
 let () =
-  f (encode [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
+  print_endline
+  @@ dump
+       (encode [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
 ;;
