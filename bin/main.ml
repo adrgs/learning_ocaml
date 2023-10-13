@@ -235,3 +235,32 @@ let () =
   @@ decode
        [ Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d"; Many (4, "e") ]
 ;;
+
+(* prob 13 *)
+
+let encode list =
+  let rec encode' acc chr nr list =
+    match list with
+    | [] ->
+      if nr = 0
+      then acc
+      else if nr = 1
+      then acc @ [ One chr ]
+      else acc @ [ Many (nr, chr) ]
+    | x :: tail ->
+      if nr = 0
+      then encode' acc x 1 tail
+      else if x = chr
+      then encode' acc chr (nr + 1) tail
+      else if nr = 1
+      then encode' (acc @ [ One chr ]) x 1 tail
+      else encode' (acc @ [ Many (nr, chr) ]) x 1 tail
+  in
+  encode' [] "" 0 list
+;;
+
+let () =
+  print_endline
+  @@ dump
+       (encode [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
+;;
