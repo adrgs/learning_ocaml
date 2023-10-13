@@ -242,3 +242,35 @@ let f list =
 let () =
   f (encode [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
 ;;
+
+(* prob 11 *)
+let () = print_endline "=== prob 11 ==="
+
+type 'a rle =
+  | One of 'a
+  | Many of int * 'a
+
+let encode list =
+  let rec encode' acc chr nr list =
+    match list with
+    | [] -> 
+      if nr = 0 then acc 
+      else if nr = 1 then acc @ [ One chr ]
+      else acc @ [ Many (nr, chr) ]
+    | x :: tail ->
+      if nr = 0
+      then encode' acc x 1 tail
+      else if x = chr
+      then encode' acc chr (nr + 1) tail
+      else 
+        if nr = 1 then encode' (acc @ [ One chr ]) x 1 tail
+        else encode' (acc @ [ Many (nr, chr) ]) x 1 tail
+  in
+  encode' [] "" 0 list
+;;
+
+let f list = print_endline (String.concat "" (List.map (fun x -> match x with One x -> x | Many (nr, chr) -> string_of_int nr ^ chr) list))
+
+let () =
+  f (encode [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
+;;
