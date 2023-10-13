@@ -331,3 +331,14 @@ let () = print_endline @@ dump (x)
 let () = print_endline @@ dump (y)
 
 (* prob 18 *)
+let () = print_endline "=== prob 18 ==="
+
+let slice list st en = 
+  let rec slice' list idx =
+    match list with
+    | [] -> []
+    | x :: tail -> if idx < st then slice' tail (idx + 1) else if idx > en then [] else x :: slice' tail (idx + 1)
+  in
+  slice' list 0
+
+let () = print_endline @@ dump (slice ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j"] 2 6)
