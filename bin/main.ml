@@ -361,13 +361,26 @@ let () =
 (* prob 19 *)
 let () = print_endline "=== prob 19 ==="
 
-let rotate list n = 
+let rotate list n =
   let len = length list in
-  let n' = if n < 0 then (n mod len + len) else n in
+  let n' = if n < 0 then (n mod len) + len else n in
   let a, b = split list n' in
   b @ a
+;;
 
-let () = print_endline @@ dump (rotate ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"] 3)
-let () = print_endline @@ dump (rotate ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"] (-2))
+let () = print_endline @@ dump (rotate [ "a"; "b"; "c"; "d"; "e"; "f"; "g"; "h" ] 3)
+let () = print_endline @@ dump (rotate [ "a"; "b"; "c"; "d"; "e"; "f"; "g"; "h" ] (-2))
 
 (* prob 20 *)
+let () = print_endline "=== prob 20 ==="
+
+let remove_at idx list =
+  let rec remove_at' idx list acc =
+    match list with
+    | [] -> acc
+    | x :: tail -> if idx = 0 then acc @ tail else remove_at' (idx - 1) tail (acc @ [ x ])
+  in
+  remove_at' idx list []
+;;
+
+let () = print_endline @@ dump (remove_at 1 [ "a"; "b"; "c"; "d" ])
