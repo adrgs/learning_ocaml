@@ -210,3 +210,28 @@ let () =
   @@ dump
        (encode [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
 ;;
+
+(* prob 12 *)
+let () = print_endline "=== prob 12 ==="
+
+let decode list =
+  let rec decode' acc list =
+    match list with
+    | [] -> acc
+    | x :: tail ->
+      (match x with
+       | One y -> decode' (acc @ [ y ]) tail
+       | Many (nr, y) ->
+         if nr > 0
+         then decode' (acc @ [ y ]) (Many (nr - 1, y) :: tail)
+         else decode' acc tail)
+  in
+  decode' [] list
+;;
+
+let () =
+  print_endline
+  @@ dump
+  @@ decode
+       [ Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d"; Many (4, "e") ]
+;;
