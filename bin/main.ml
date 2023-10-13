@@ -281,3 +281,21 @@ let duplicate list =
 let () = print_endline @@ dump (duplicate [ "a"; "b"; "c"; "c"; "d" ])
 
 (* prob 15 *)
+let () = print_endline "=== prob 15 ==="
+
+let replicate list times = 
+  let rec repeat acc el times =
+    match times with
+    | 0 -> acc
+    | _ -> repeat (acc @ [ el ]) el (times - 1)
+  in
+  let rec replicate' list =
+    match list with
+    | [] -> []
+    | x :: tail -> (repeat [] x times) @ replicate' tail
+  in
+  replicate' list
+
+let () = print_endline @@ dump (replicate [ "a"; "b"; "c" ] 3)
+
+(* prob 16 *)
