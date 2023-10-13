@@ -283,7 +283,7 @@ let () = print_endline @@ dump (duplicate [ "a"; "b"; "c"; "c"; "d" ])
 (* prob 15 *)
 let () = print_endline "=== prob 15 ==="
 
-let replicate list times = 
+let replicate list times =
   let rec repeat acc el times =
     match times with
     | 0 -> acc
@@ -292,53 +292,82 @@ let replicate list times =
   let rec replicate' list =
     match list with
     | [] -> []
-    | x :: tail -> (repeat [] x times) @ replicate' tail
+    | x :: tail -> repeat [] x times @ replicate' tail
   in
   replicate' list
+;;
 
 let () = print_endline @@ dump (replicate [ "a"; "b"; "c" ] 3)
 
 (* prob 16 *)
 let () = print_endline "=== prob 16 ==="
 
-let drop list nth = 
+let drop list nth =
   let rec drop' list n =
     match list with
     | [] -> []
     | x :: tail -> if n = 1 then drop' tail nth else x :: drop' tail (n - 1)
-  in 
+  in
   drop' list nth
+;;
 
-let () = print_endline @@ dump (drop [ "a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j" ] 3)
+let () =
+  print_endline @@ dump (drop [ "a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j" ] 3)
+;;
 
 (* prob 17 *)
 let () = print_endline "=== prob 17 ==="
 
-let split list idx = 
+let split list idx =
   let rec split' list n acc1 acc2 =
     match list with
-    | [] -> (acc1, acc2)
-    | x :: tail -> if n < idx then split' tail (n + 1) (acc1 @ [ x ]) acc2 else split' tail (n + 1) acc1 (acc2 @ [ x ])
+    | [] -> acc1, acc2
+    | x :: tail ->
+      if n < idx
+      then split' tail (n + 1) (acc1 @ [ x ]) acc2
+      else split' tail (n + 1) acc1 (acc2 @ [ x ])
   in
   split' list 0 [] []
+;;
 
-let (x, y) = split ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j"] 3
-let () = print_endline @@ dump (x)
-let () = print_endline @@ dump (y)
-
-let (x, y) = split ["a"; "b"; "c"; "d"] 5
-let () = print_endline @@ dump (x)
-let () = print_endline @@ dump (y)
+let x, y = split [ "a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j" ] 3
+let () = print_endline @@ dump x
+let () = print_endline @@ dump y
+let x, y = split [ "a"; "b"; "c"; "d" ] 5
+let () = print_endline @@ dump x
+let () = print_endline @@ dump y
 
 (* prob 18 *)
 let () = print_endline "=== prob 18 ==="
 
-let slice list st en = 
+let slice list st en =
   let rec slice' list idx =
     match list with
     | [] -> []
-    | x :: tail -> if idx < st then slice' tail (idx + 1) else if idx > en then [] else x :: slice' tail (idx + 1)
+    | x :: tail ->
+      if idx < st
+      then slice' tail (idx + 1)
+      else if idx > en
+      then []
+      else x :: slice' tail (idx + 1)
   in
   slice' list 0
+;;
 
-let () = print_endline @@ dump (slice ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j"] 2 6)
+let () =
+  print_endline @@ dump (slice [ "a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j" ] 2 6)
+;;
+
+(* prob 19 *)
+let () = print_endline "=== prob 19 ==="
+
+let rotate list n = 
+  let len = length list in
+  let n' = if n < 0 then (n mod len + len) else n in
+  let a, b = split list n' in
+  b @ a
+
+let () = print_endline @@ dump (rotate ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"] 3)
+let () = print_endline @@ dump (rotate ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"] (-2))
+
+(* prob 20 *)
