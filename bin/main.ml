@@ -310,3 +310,24 @@ let drop list nth =
   drop' list nth
 
 let () = print_endline @@ dump (drop [ "a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j" ] 3)
+
+(* prob 17 *)
+let () = print_endline "=== prob 17 ==="
+
+let split list idx = 
+  let rec split' list n acc1 acc2 =
+    match list with
+    | [] -> (acc1, acc2)
+    | x :: tail -> if n < idx then split' tail (n + 1) (acc1 @ [ x ]) acc2 else split' tail (n + 1) acc1 (acc2 @ [ x ])
+  in
+  split' list 0 [] []
+
+let (x, y) = split ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j"] 3
+let () = print_endline @@ dump (x)
+let () = print_endline @@ dump (y)
+
+let (x, y) = split ["a"; "b"; "c"; "d"] 5
+let () = print_endline @@ dump (x)
+let () = print_endline @@ dump (y)
+
+(* prob 18 *)
