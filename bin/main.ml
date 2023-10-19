@@ -384,3 +384,22 @@ let remove_at idx list =
 ;;
 
 let () = print_endline @@ dump (remove_at 1 [ "a"; "b"; "c"; "d" ])
+
+(* prob 21 *)
+let () = print_endline "=== prob 21 ==="
+
+let insert_at value idx list =
+  let rec insert_at' value idx list acc =
+    match idx, list with
+    | 0, _ -> acc @ [ value ] @ list
+    | _, [] -> acc @ [ value ]
+    | _, x :: tail -> insert_at' value (idx - 1) tail (acc @ [ x ])
+  in
+  insert_at' value idx list []
+;;
+
+let () = print_endline @@ dump (insert_at "alfa" 1 [ "a"; "b"; "c"; "d" ])
+let () = print_endline @@ dump (insert_at "alfa" 3 [ "a"; "b"; "c"; "d" ])
+let () = print_endline @@ dump (insert_at "alfa" 4 [ "a"; "b"; "c"; "d" ])
+
+(* prob 22 *)
