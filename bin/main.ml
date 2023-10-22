@@ -446,3 +446,12 @@ let () = print_endline @@ dump (rand_select [ "a"; "b"; "c"; "d"; "e"; "f"; "g";
 let () = print_endline "=== prob 24 ==="
 let lotto_select n m = rand_select (range 1 m) n
 let () = print_endline @@ dump (lotto_select 6 49)
+
+(* prob 25 *)
+let () = print_endline "=== prob 25 ==="
+
+let permutation list = rand_select list (length list)
+
+let () = print_endline @@ dump (permutation [ "a"; "b"; "c"; "d"; "e"; "f" ])
+
+(* prob 26 *)
