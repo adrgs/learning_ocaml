@@ -403,3 +403,15 @@ let () = print_endline @@ dump (insert_at "alfa" 3 [ "a"; "b"; "c"; "d" ])
 let () = print_endline @@ dump (insert_at "alfa" 4 [ "a"; "b"; "c"; "d" ])
 
 (* prob 22 *)
+let () = print_endline "=== prob 22 ==="
+
+let range st en =
+  let rec range' st en acc =
+    if st == en then st :: acc else if st < en then range' st (en - 1) (en :: acc) else range' st (en + 1) (en :: acc)
+  in
+  range' st en []
+;;
+
+let () = print_endline @@ dump (range 4 9)
+let () = print_endline @@ dump (range 9 4)
+let () = print_endline @@ dump (range 5 5)
