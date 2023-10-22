@@ -407,7 +407,11 @@ let () = print_endline "=== prob 22 ==="
 
 let range st en =
   let rec range' st en acc =
-    if st == en then st :: acc else if st < en then range' st (en - 1) (en :: acc) else range' st (en + 1) (en :: acc)
+    if st == en
+    then st :: acc
+    else if st < en
+    then range' st (en - 1) (en :: acc)
+    else range' st (en + 1) (en :: acc)
   in
   range' st en []
 ;;
@@ -415,3 +419,30 @@ let range st en =
 let () = print_endline @@ dump (range 4 9)
 let () = print_endline @@ dump (range 9 4)
 let () = print_endline @@ dump (range 5 5)
+
+(* prob 23 *)
+let () = print_endline "=== prob 23 ==="
+
+let rand_select list k =
+  let rec extract list n acc =
+    match list with
+    | [] -> raise Not_found
+    | x :: tail -> if n = 0 then x, acc @ tail else extract tail (n - 1) (acc @ [ x ])
+  in
+  let extract_rand list len acc = extract list (Random.int len) acc in
+  let rec rand_select' list k len acc =
+    if k = 0
+    then acc
+    else (
+      let picked, rest = extract_rand list len [] in
+      rand_select' rest (k - 1) (len - 1) (acc @ [ picked ]))
+  in
+  rand_select' list k (length list) []
+;;
+
+let () = print_endline @@ dump (rand_select [ "a"; "b"; "c"; "d"; "e"; "f"; "g"; "h" ] 3)
+
+(* prob 24 *)
+let () = print_endline "=== prob 24 ==="
+let lotto_select n m = rand_select (range 1 m) n
+let () = print_endline @@ dump (lotto_select 6 49)
